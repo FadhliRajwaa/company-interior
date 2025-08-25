@@ -10,7 +10,7 @@
                     <p class="text-gray-600 mt-2">Update informasi progress untuk project {{ $progress->id_project }}</p>
                 </div>
 
-                <form method="POST" action="{{ route('progress.update', $progressUpdate) }}" enctype="multipart/form-data" class="space-y-6">
+                <form method="POST" action="{{ route('progress.update', $progress) }}" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     @method('PUT')
 
@@ -129,7 +129,7 @@
                                     <p class="pl-1">atau drag and drop</p>
                                 </div>
                                 <p class="text-xs text-gray-500">PNG, JPG, GIF hingga 10MB</p>
-                                @if($progressUpdate->foto)
+                                @if($progress->foto)
                                     <p class="text-xs text-blue-600">Kosongkan jika tidak ingin mengubah foto</p>
                                 @endif
                             </div>
