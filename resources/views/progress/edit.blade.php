@@ -75,13 +75,20 @@
                     </div>
 
                     <!-- Current Photo Display -->
-                    @if($progressUpdate->foto && file_exists(public_path($progressUpdate->foto)))
+                    @php
+                        use Illuminate\Support\Facades\Storage;
+                        $fotoPath = $progressUpdate->foto;
+                        $fotoExists = $fotoPath && (\Illuminate\Support\Str::startsWith($fotoPath, 'images/')
+                            ? file_exists(public_path($fotoPath))
+                            : Storage::disk('public')->exists($fotoPath));
+                    @endphp
+                    @if($fotoExists)
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 Foto Saat Ini
                             </label>
                             <div class="mb-4">
-                                <img src="{{ asset($progressUpdate->foto) }}" alt="Current Progress Photo" 
+                                <img src="{{ \Illuminate\Support\Str::startsWith($fotoPath, 'images/') ? asset($fotoPath) : asset('storage/' . $fotoPath) }}" alt="Current Progress Photo" 
                                      class="h-48 w-full object-cover rounded-lg border border-gray-200">
                             </div>
                         </div>
