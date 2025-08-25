@@ -11,7 +11,7 @@ RUN npm run build
 FROM composer:2 AS vendor
 WORKDIR /app
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 # Stage 3: Production image
 FROM php:8.2-fpm
