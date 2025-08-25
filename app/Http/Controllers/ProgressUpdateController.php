@@ -73,29 +73,35 @@ class ProgressUpdateController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'id_project' => 'required|string|max:255',
-            'tanggal_update' => 'required|date',
-            'deskripsi' => 'required|string',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
-        ]);
+        try {
+            $validated = $request->validate([
+                'user_id' => 'required|exists:users,id',
+                'id_project' => 'required|string|max:255',
+                'tanggal_update' => 'required|date',
+                'deskripsi' => 'required|string',
+                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            ]);
 
-        if ($request->hasFile('foto')) {
-            // Delete old photo
-            if ($progressUpdate->foto && file_exists(public_path($progressUpdate->foto))) {
-                unlink(public_path($progressUpdate->foto));
+            if ($request->hasFile('foto')) {
+                // Delete old photo
+                if ($progressUpdate->foto && file_exists(public_path($progressUpdate->foto))) {
+                    unlink(public_path($progressUpdate->foto));
+                }
+
+                $foto = $request->file('foto');
+                $filename = 'progress_' . time() . '.' . $foto->getClientOriginalExtension();
+                $foto->move(public_path('images/progress'), $filename);
+                $validated['foto'] = 'images/progress/' . $filename;
             }
 
-            $foto = $request->file('foto');
-            $filename = 'progress_' . time() . '.' . $foto->getClientOriginalExtension();
-            $foto->move(public_path('images/progress'), $filename);
-            $validated['foto'] = 'images/progress/' . $filename;
+            $progressUpdate->update($validated);
+
+            return redirect()->route('progress.index')->with('success', 'Progress update berhasil diperbarui!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi error: ' . $e->getMessage())->withInput();
         }
-
-        $progressUpdate->update($validated);
-
-        return redirect()->route('progress.index')->with('success', 'Progress update berhasil diperbarui!');
     }
 
     public function destroy(ProgressUpdate $progressUpdate)
