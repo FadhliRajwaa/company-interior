@@ -14,7 +14,7 @@ class ProgressUpdateController extends Controller
         if (Auth::user()->isOwner()) {
             $progressUpdates = ProgressUpdate::with('user')->latest('tanggal_update')->get();
         } else {
-            $progressUpdates = ProgressUpdate::where('customer_id', Auth::id())->latest('tanggal_update')->get();
+            $progressUpdates = ProgressUpdate::where('user_id', Auth::id())->latest('tanggal_update')->get();
         }
 
         return view('progress.index', compact('progressUpdates'));
