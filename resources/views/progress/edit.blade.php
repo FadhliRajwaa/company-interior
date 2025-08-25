@@ -7,7 +7,7 @@
             <div class="p-6 text-gray-900">
                 <div class="mb-6">
                     <h1 class="text-2xl font-bold text-gray-900">Edit Progress Update</h1>
-                    <p class="text-gray-600 mt-2">Update informasi progress untuk project {{ $progressUpdate->id_project }}</p>
+                    <p class="text-gray-600 mt-2">Update informasi progress untuk project {{ $progress->id_project }}</p>
                 </div>
 
                 <form method="POST" action="{{ route('progress.update', $progressUpdate) }}" enctype="multipart/form-data" class="space-y-6">
@@ -24,7 +24,7 @@
                             <option value="">Pilih Customer</option>
                             @foreach($customers as $customer)
                                 <option value="{{ $customer->id }}" 
-                                        {{ (old('user_id') ?? $progressUpdate->user_id) == $customer->id ? 'selected' : '' }}>
+                                        {{ (old('user_id') ?? $progress->user_id) == $customer->id ? 'selected' : '' }}>
                                     {{ $customer->name }}
                                 </option>
                             @endforeach
@@ -40,7 +40,7 @@
                             ID Project <span class="text-red-500">*</span>
                         </label>
                         <input type="text" id="id_project" name="id_project" 
-                               value="{{ old('id_project') ?? $progressUpdate->id_project }}" required
+                               value="{{ old('id_project') ?? $progress->id_project }}" required
                                placeholder="Masukkan ID project (contoh: INT-2024-001)"
                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 @error('id_project') border-red-500 @enderror">
                         @error('id_project')
@@ -54,7 +54,7 @@
                             Tanggal Update <span class="text-red-500">*</span>
                         </label>
                         <input type="date" id="tanggal_update" name="tanggal_update" 
-                               value="{{ old('tanggal_update') ?? $progressUpdate->tanggal_update->format('Y-m-d') }}" required
+                               value="{{ old('tanggal_update') ?? $progress->tanggal_update->format('Y-m-d') }}" required
                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 @error('tanggal_update') border-red-500 @enderror">
                         @error('tanggal_update')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -69,7 +69,7 @@
                         </label>
                         <textarea id="deskripsi" name="deskripsi" rows="5" required
                                   placeholder="Jelaskan detail progress yang telah dicapai..."
-                                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 @error('deskripsi') border-red-500 @enderror">{{ old('deskripsi') ?? $progressUpdate->deskripsi }}</textarea>
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 @error('deskripsi') border-red-500 @enderror">{{ old('deskripsi') ?? $progress->deskripsi }}</textarea>
                         @error('deskripsi')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -82,9 +82,9 @@
                         </label>
                         <select id="status" name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 @error('status') border-red-500 @enderror">
                             <option value="">Pilih Status</option>
-                            <option value="in_progress" {{ (old('status') ?? $progressUpdate->status) == 'in_progress' ? 'selected' : '' }}>Dalam Progress</option>
-                            <option value="completed" {{ (old('status') ?? $progressUpdate->status) == 'completed' ? 'selected' : '' }}>Selesai</option>
-                            <option value="on_hold" {{ (old('status') ?? $progressUpdate->status) == 'on_hold' ? 'selected' : '' }}>On Hold</option>
+                            <option value="in_progress" {{ (old('status') ?? $progress->status) == 'in_progress' ? 'selected' : '' }}>Dalam Progress</option>
+                            <option value="completed" {{ (old('status') ?? $progress->status) == 'completed' ? 'selected' : '' }}>Selesai</option>
+                            <option value="on_hold" {{ (old('status') ?? $progress->status) == 'on_hold' ? 'selected' : '' }}>On Hold</option>
                         </select>
                         @error('status')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -94,7 +94,7 @@
                     <!-- Current Photo Display -->
                     @php
                         use Illuminate\Support\Facades\Storage;
-                        $fotoPath = $progressUpdate->foto;
+                        $fotoPath = $progress->foto;
                         $fotoExists = $fotoPath && (\Illuminate\Support\Str::startsWith($fotoPath, 'images/')
                             ? file_exists(public_path($fotoPath))
                             : Storage::disk('public')->exists($fotoPath));
@@ -114,7 +114,7 @@
                     <!-- Photo Upload -->
                     <div>
                         <label for="foto" class="block text-sm font-medium text-gray-700 mb-2">
-                            {{ $progressUpdate->foto ? 'Ganti Foto Progress' : 'Foto Progress' }}
+                            {{ $progress->foto ? 'Ganti Foto Progress' : 'Foto Progress' }}
                         </label>
                         <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 transition duration-300">
                             <div class="space-y-1 text-center">
