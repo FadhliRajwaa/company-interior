@@ -1,0 +1,64 @@
+services:
+  - type: web
+    name: company-interior
+    env: php
+    plan: free
+    region: singapore
+    buildCommand: "composer install --no-dev --optimize-autoloader"
+    startCommand: "php artisan migrate --force && php artisan serve --host 0.0.0.0 --port 10000"
+    envVars:
+      - key: APP_NAME
+        value: Laravel
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        sync: false # Set manually in Render dashboard
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        sync: false # Set manually to your Render URL
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        value: companyinterior-fadhlirajwaarahmana-9486.i.aivencloud.com
+      - key: DB_PORT
+        value: 16722
+      - key: DB_DATABASE
+        value: company-interior
+      - key: DB_USERNAME
+        value: avnadmin
+      - key: DB_PASSWORD
+        sync: false # Set manually in Render dashboard
+      - key: SESSION_DRIVER
+        value: database
+      - key: SESSION_LIFETIME
+        value: 120
+      - key: SESSION_ENCRYPT
+        value: false
+      - key: SESSION_PATH
+        value: /
+      - key: SESSION_DOMAIN
+        value: null
+      - key: BROADCAST_CONNECTION
+        value: log
+      - key: FILESYSTEM_DISK
+        value: local
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: MAIL_MAILER
+        value: log
+      - key: MAIL_HOST
+        value: 127.0.0.1
+      - key: MAIL_PORT
+        value: 2525
+      - key: MAIL_USERNAME
+        value: null
+      - key: MAIL_PASSWORD
+        value: null
+      - key: MAIL_FROM_ADDRESS
+        value: hello@example.com
+      - key: MAIL_FROM_NAME
+        value: Laravel
+    staticPublishPath: public
