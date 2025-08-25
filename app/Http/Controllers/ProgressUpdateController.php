@@ -36,8 +36,9 @@ class ProgressUpdateController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
+
         $validated = $request->validate([
-            'customer_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'id_project' => 'required|string|max:255',
             'tanggal_update' => 'required|date',
             'deskripsi' => 'required|string',
@@ -73,7 +74,7 @@ class ProgressUpdateController extends Controller
         }
 
         $validated = $request->validate([
-            'customer_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'id_project' => 'required|string|max:255',
             'tanggal_update' => 'required|date',
             'deskripsi' => 'required|string',
