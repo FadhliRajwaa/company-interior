@@ -17,4 +17,4 @@ deploy-vercel.*
 git-cleanup.*
 build.sh
 /bootstrap/cache/*
-.phpunit.result.cache
+.phpunit.result.cache*

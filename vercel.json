@@ -1,19 +1,14 @@
 {
   "version": 2,
-  "outputDirectory": "public",
-  "buildCommand": "npm run build",
-  "framework": null,
-  "routes": [
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.6.0"
+    }
+  },
+  "rewrites": [
     {
-      "src": "/(css|js|images|fonts|favicon\\.ico|robots\\.txt|manifest\\.json)/(.*)",
-      "headers": {
-        "Cache-Control": "max-age=31536000"
-      },
-      "dest": "/public/$1/$2"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/index.php"
+      "source": "/(.*)",
+      "destination": "/api/index.php"
     }
   ]
 }

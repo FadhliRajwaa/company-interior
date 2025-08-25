@@ -3,7 +3,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
+        "build": "vite build && npm run copy-public",
+        "copy-public": "mkdir -p dist && cp -r public/* dist/ 2>/dev/null || robocopy public dist /E /NFL /NDL /NJH /NJS /nc /ns /np",
         "dev": "vite",
         "vercel-build": "npm run build"
     },
