@@ -61,6 +61,7 @@
                         @enderror
                     </div>
 
+
                     <!-- Description -->
                     <div>
                         <label for="deskripsi" class="block text-sm font-medium text-gray-700 mb-2">
@@ -70,6 +71,22 @@
                                   placeholder="Jelaskan detail progress yang telah dicapai..."
                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 @error('deskripsi') border-red-500 @enderror">{{ old('deskripsi') ?? $progressUpdate->deskripsi }}</textarea>
                         @error('deskripsi')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Status -->
+                    <div>
+                        <label for="status" class="block text-sm font-medium text-gray-700 mb-2">
+                            Status Progress
+                        </label>
+                        <select id="status" name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 @error('status') border-red-500 @enderror">
+                            <option value="">Pilih Status</option>
+                            <option value="in_progress" {{ (old('status') ?? $progressUpdate->status) == 'in_progress' ? 'selected' : '' }}>Dalam Progress</option>
+                            <option value="completed" {{ (old('status') ?? $progressUpdate->status) == 'completed' ? 'selected' : '' }}>Selesai</option>
+                            <option value="on_hold" {{ (old('status') ?? $progressUpdate->status) == 'on_hold' ? 'selected' : '' }}>On Hold</option>
+                        </select>
+                        @error('status')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>

@@ -79,6 +79,7 @@ class ProgressUpdateController extends Controller
                 'id_project' => 'required|string|max:255',
                 'tanggal_update' => 'required|date',
                 'deskripsi' => 'required|string',
+                'status' => 'nullable|string|in:in_progress,completed,on_hold',
                 'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
             ]);
 
