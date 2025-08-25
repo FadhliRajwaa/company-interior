@@ -51,5 +51,7 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 EXPOSE 80
 
-# Otomatis migrate dan seed database saat container start
-CMD php artisan migrate:fresh --seed && /usr/bin/supervisord
+# Entrypoint script untuk migrate/seed dan start supervisor
+COPY ./docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+CMD ["/entrypoint.sh"]
