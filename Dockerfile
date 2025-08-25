@@ -1,10 +1,15 @@
 
+
 # Stage 1: Build frontend assets
 FROM node:18 AS frontend
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+# Pastikan build asset Vite menggunakan HTTPS
+ENV NODE_ENV=production
+ENV VITE_ASSET_URL=https://company-interior.onrender.com
+ENV ASSET_URL=https://company-interior.onrender.com
 RUN npm run build
 
 # Stage 2: Composer dependencies
@@ -46,4 +51,5 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 EXPOSE 80
 
-CMD ["/usr/bin/supervisord"]
+# Otomatis migrate dan seed database saat container start
+CMD php artisan migrate:fresh --seed && /usr/bin/supervisord
