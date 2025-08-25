@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.6.0"
+    }
+  },
+  "routes": [
+    {
+      "src": "/(css|js|images|fonts|favicon\\.ico|robots\\.txt|manifest\\.json|build)/(.*)",
+      "headers": {
+        "Cache-Control": "max-age=31536000"
+      },
+      "dest": "/public/$1/$2"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.php"
+    }
+  ]
+}
+
